@@ -2,13 +2,15 @@ OUTPUT_ARCH(arm)
 
 SECTIONS {
 	. = 0x02000000;
+	gUnk_3000000 = 0x03000000;
+	gUnk_3000004 = 0x03000004;
 
 	. = 0x08000000;
 	.text :
 	ALIGN(4) {
 		asm/crt0.o(.text);
 		asm/code.o(.text);
-		asm/code_80002C8.o(.text);
+		src/code_80002C8.o(.text);
 		asm/code2.o(.text);
 		data/data.o(.rodata);
 	} = 0

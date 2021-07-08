@@ -1,8 +1,8 @@
 .include "asm/macro.inc"
 .syntax unified
 
-	thumb_func_start sub_80001D0
-sub_80001D0: @ 0x080001D0
+	thumb_func_start AgbMain
+AgbMain: @ 0x080001D0
 	push {r4, r5, lr}
 	sub sp, #4
 	ldr r1, _0800026C @ =0x04000204
@@ -101,7 +101,17 @@ _080002A8: .4byte 0x04000004
 _080002AC: .4byte 0x04000208
 _080002B0: .4byte 0x00007FFF
 _080002B4: .4byte 0x08080000
-_080002B8:
-	.byte 0x01, 0x49, 0x01, 0x20, 0x08, 0x80, 0x70, 0x47
-	.byte 0xF8, 0x7F, 0x00, 0x03, 0x70, 0x47, 0x00, 0x00
 
+	thumb_func_start sub_80002B8
+sub_80002B8: @ 0x080002B8
+	ldr r1, _080002C0 @ =0x03007FF8
+	movs r0, #1
+	strh r0, [r1]
+	bx lr
+	.align 2, 0
+_080002C0: .4byte 0x03007FF8
+
+	thumb_func_start IntrDummy
+IntrDummy: @ 0x080002C4
+	bx lr
+	.align 2, 0

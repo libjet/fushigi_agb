@@ -2,18 +2,24 @@ OUTPUT_ARCH(arm)
 
 SECTIONS {
 	. = 0x02000000;
-	gUnk_3000000 = 0x03000000;
-	gUnk_3000004 = 0x03000004;
+	g3000000 = 0x03000000;
+	g3000004 = 0x03000004;
+	gIntrMainBuffer = 0x03000010;
+	g3000210 = 0x03000210;
 
 	. = 0x08000000;
 	.text :
 	ALIGN(4) {
 		asm/crt0.o(.text);
-		asm/code.o(.text);
-		src/code_80002C8.o(.text);
-		asm/code2.o(.text);
-		data/data.o(.rodata);
+		src/code_80001D0.o(.text);
+		src/code_80001D0.o(.rodata);
 	} = 0
+
+	. = 0x08080000;
+	data1 :
+	ALIGN(4) {
+		data/data.o(.rodata);
+	}
 
 	/* Discard everything not specifically mentioned above. */
 	/DISCARD/ : {

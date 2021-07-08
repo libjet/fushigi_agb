@@ -75,12 +75,12 @@ _08000114:
 	ands r0, r1, #0x1000
 _080001B0:
 	strh r0, [r3, #2]
-	ldr r1, _080001CC @ =0x080003BC
+	ldr r1, _080001CC @ =gIntrTable
 	add r1, r1, r2
 	ldr r0, [r1]
 	bx r0
 	.align 2, 0
 
 _080001C4: .4byte 0x03007FFC
-_080001C8: .4byte sub_80001D0
-_080001CC: .4byte 0x080003BC
+_080001C8: .4byte AgbMain
+_080001CC: .4byte gIntrTable

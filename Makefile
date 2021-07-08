@@ -63,7 +63,7 @@ SUBDIRS := $(sort $(dir $(ALL_OBJS)))
 $(shell mkdir -p $(SUBDIRS))
 
 $(ROM): $(ELF)
-	$(OBJCOPY) -O binary --pad-to 0x200000 $< $@
+	$(OBJCOPY) -O binary --pad-to 0x00200000 $< $@
 
 $(ELF): $(ALL_OBJS) $(LDSCRIPT)
 	cd $(BUILD_DIR) && $(LD) -T ../$(LDSCRIPT) -Map ../$(MAP) -o ../$@

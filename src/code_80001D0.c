@@ -56,9 +56,9 @@ void IntrDummy(void) {
 }
 
 void sub_80002C8(void) {
-    s32 r0 = REG_KEYINPUT ^ 0x3ff;
-    g3000004 = r0 & ~g3000000;
-    g3000000 = r0;
+	s32 r0 = REG_KEYINPUT ^ 0x3ff;
+	g3000004 = r0 & ~g3000000;
+	g3000000 = r0;
 }
 
 void sub_80002F8 (void) {
@@ -78,7 +78,7 @@ void sub_80002F8 (void) {
 }
 
 void sub_80003B4(void) {
-    asm("movs r2, #0");
+	asm("movs r2, #0");
 	asm("svc 5");
 }
 

@@ -10,7 +10,7 @@ void AgbMain(void) {
 	DmaFill32(3, 0, EWRAM_START, 0x40000);
 	DmaFill32(3, 0, IWRAM_START, 0x7E00);
 	DmaCopy32(3, IntrMain, gIntrMainBuffer, 0x200);
-	INTR_VECTOR = (void (*)(void))gIntrMainBuffer;
+	INTR_VECTOR = gIntrMainBuffer;
 	DmaFill32(3, 0xA0, g3000210, 0x400);
 	REG_BG2CNT = 1;
 	REG_DISPCNT = 0x403;
@@ -18,7 +18,7 @@ void AgbMain(void) {
 	REG_DISPSTAT = 8;
 	REG_IME = 1;
 	for (i = 0; i < 0x9600; i++) {
-		*(u16 *)(VRAM + 2 * i) = unkdata_80000[i] & 0x7FFF;
+		*(u16 *)(VRAM + (i * 2)) = unkdata_80000[i] & 0x7FFF;
 	}
 	for (;;) {
 		sub_80003B4();
@@ -44,13 +44,13 @@ void sub_80002F8 (void) {
 		g3000210[i].y = g3000210[i - 1].y;
 		g3000210[i].x = g3000210[i - 1].x;
 	}
-	if (g3000000 & 0x40) // pressed up
+	if (g3000000 & DPAD_UP)
 		g3000210[0].y -= 4;
-	if (g3000000 & 0x80) // pressed down
+	if (g3000000 & DPAD_DOWN)
 		g3000210[0].y += 4;
-	if (g3000000 & 0x20) // pressed left
+	if (g3000000 & DPAD_LEFT)
 		g3000210[0].x -= 4;
-	if (g3000000 & 0x10) // pressed right
+	if (g3000000 & DPAD_RIGHT)
 		g3000210[0].x += 4;
 }
 

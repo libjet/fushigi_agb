@@ -2,30 +2,7 @@
 #include "gba/defines.h"
 #include "gba/io_reg.h"
 #include "gba/macro.h"
-
-typedef void (*IntrFunc)(void);
-
-struct Unk3000210 {
-  u8 unk0;
-  u8 filler1;
-  u32 unk2:9;
-  u8 filler4[4];
-};
-
-extern u16 g3000000; // keys(buttons)
-extern u16 g3000004;
-extern u32 gIntrMainBuffer[0x200];
-extern struct Unk3000210 g3000210[];
-extern u16 g3007ff8;
-extern const u16 unkdata_80000[0x9600];
-
-void IntrMain (void);
-void AgbMain (void);
-void sub_80002B8 (void);
-void sub_80002C8 (void);
-void sub_80002F8 (void);
-void IntrDummy (void);
-void sub_80003B4 (void);
+#include "main.h"
 
 void AgbMain(void) {
 	s32 i;
@@ -64,17 +41,17 @@ void sub_80002C8(void) {
 void sub_80002F8 (void) {
 	u8 i;
 	for (i = 93; i; i--) {
-		g3000210[i].unk0 = g3000210[i - 1].unk0;
-		g3000210[i].unk2 = g3000210[i - 1].unk2;
+		g3000210[i].y = g3000210[i - 1].y;
+		g3000210[i].x = g3000210[i - 1].x;
 	}
 	if (g3000000 & 0x40) // pressed up
-		g3000210[0].unk0 -= 4;
+		g3000210[0].y -= 4;
 	if (g3000000 & 0x80) // pressed down
-		g3000210[0].unk0 += 4;
+		g3000210[0].y += 4;
 	if (g3000000 & 0x20) // pressed left
-		g3000210[0].unk2 -= 4;
+		g3000210[0].x -= 4;
 	if (g3000000 & 0x10) // pressed right
-		g3000210[0].unk2 += 4;
+		g3000210[0].x += 4;
 }
 
 void sub_80003B4(void) {
